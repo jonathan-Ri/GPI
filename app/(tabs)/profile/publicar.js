@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, Alert, SafeAreaView, ActivityIndicator, ScrollView, RefreshControl, Switch } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, Alert, SafeAreaView, ActivityIndicator, ScrollView, RefreshControl, Switch, Pressable } from 'react-native';
 import { addDoc, collection } from 'firebase/firestore';
 import { FIREBASE_AUTH, FIREBASE_DB, firebase } from '../../../firebaseConfig';
 import * as ImagePicker from 'expo-image-picker';
@@ -18,10 +18,21 @@ export default function Page() {
     const [refreshing, setRefreshing] = useState(false);
     const [isEnabled, setIsEnabled] = useState(false);
     const [wifi, setWifi] = useState(false);
+    const [petfriendly, setPetFriendly] = useState(false);
+    const [cocina, setCocina] = useState(false)
+    const [tipoResidencia, setTipoResidencia] = useState('');
 
-    const toggleSwitch = () => {
-        setIsEnabled(previousState => !previousState);
+    const toggleSwitchWifi = () => {
         setWifi(previousState => !previousState);
+
+    };
+    const toggleSwitchPet = () => {
+        setPetFriendly(previousState => !previousState);
+
+    };
+    const toggleSwitchCocina = () => {
+        setCocina(previousState => !previousState);
+
     };
 
     const onRefresh = useCallback(() => {
@@ -66,15 +77,22 @@ export default function Page() {
             await ref.put(blob);
             const downloadURL = await ref.getDownloadURL();
             setImagen(downloadURL);
-            await addDoc(collection(FIREBASE_DB, 'publicacion'), { User: user, Descripcion: descripcion, direccion: direccion, Valor: valor, Imagen: downloadURL, Wifi: wifi });
+            await addDoc(collection(FIREBASE_DB, 'publicacion'), { User: user, Descripcion: descripcion, direccion: direccion, Valor: valor, Imagen: downloadURL, Wifi: wifi, tipoResidencia: tipoResidencia, petfriendly: petfriendly, cocina: cocina });
 
             setUploading(false);
-            Alert.alert('Foto subida correctamente');
+            Alert.alert('Publicación subida correctamente');
             setImage(null);
         } catch (error) {
             console.error(error);
             setUploading(false);
         }
+    };
+    const [buttonColor, setButtonColor] = useState('#fff'); // Estado para el color del botón
+
+    const changeButtonColor = (residencia) => {
+        // Función para cambiar el color del botón al hacer clic y guardar el tipo de residencia
+        setButtonColor('#004AAD'); // Cambia el color del botón al hacer clic
+        setTipoResidencia(residencia); // Guarda el tipo de residencia según el botón presionado
     };
 
     return (
@@ -87,14 +105,80 @@ export default function Page() {
             >
                 <Text style={styles.title}>Publica tu arriendo aquí</Text>
                 <Text style={styles.subtitle}>Qué tipo de alojamiento ofreces</Text>
-                <Text>Wifi</Text>
+                <ScrollView horizontal={true} style={{ marginTop: 10 }}>
+                    <View style={styles.box}>
+                        <Pressable
+                            style={[styles.button, tipoResidencia === 'casa' && { backgroundColor: '#004AAD' }]} // Estilo del botón con color dinámico
+                            onPress={() => changeButtonColor('casa')} // Función que se ejecuta al hacer clic
+                        >
+                            <Ionicons name="home-outline" size={40} color="black" style={styles.icon} />
+                            <Text style={styles.text}>Casa</Text>
+                        </Pressable>
+                    </View>
+                    <View style={styles.box}>
+                        <Pressable
+                            style={[styles.button, tipoResidencia === 'edificio' && { backgroundColor: '#004AAD' }]}
+                            onPress={() => changeButtonColor('edificio')}
+                        >
+                            <Ionicons name="business-outline" size={40} color="black" style={styles.icon} />
+                            <Text style={styles.text}>Edificio</Text>
+                        </Pressable>
+                    </View>
+                    <View style={styles.box}>
+                        <Pressable
+                            style={[styles.button, tipoResidencia === 'habitacion' && { backgroundColor: '#004AAD' }]}
+                            onPress={() => changeButtonColor('habitacion')}
+                        >
+                            <Ionicons name="bed-outline" size={40} color="black" style={styles.icon} />
+                            <Text style={styles.text}>Habitación</Text>
+                        </Pressable>
+                    </View>
+                    <View style={styles.box}>
+                        <Pressable
+                            style={[styles.button, tipoResidencia === 'houseboat' && { backgroundColor: '#004AAD' }]}
+                            onPress={() => changeButtonColor('houseboat')}
+                        >
+                            <Ionicons name="boat-outline" size={40} color="black" style={styles.icon} />
+                            <Text style={styles.text}>Houseboat</Text>
+                        </Pressable>
+                    </View>
+                    <View style={styles.box}>
+                        <Pressable
+                            style={[styles.button, tipoResidencia === 'casaParticular' && { backgroundColor: '#004AAD' }]}
+                            onPress={() => changeButtonColor('casaParticular')}
+                        >
+                            <Ionicons name="storefront-outline" size={40} color="black" style={styles.icon} />
+                            <Text style={styles.text}>Casa particular</Text>
+                        </Pressable>
+                    </View>
+                </ScrollView>
+                <View style={styles.switch}>
+                <Text style={styles.textSwitch}>Wifi</Text>
                 <Switch
                     trackColor={{ false: "#767577", true: "#004AAD" }}
-                    thumbColor={isEnabled ? "#fffff" : "#f4f3f4"}
-                    onValueChange={toggleSwitch}
-                    value={isEnabled}
+                    thumbColor={isEnabled ? "#ffffff" : "#ffffff"} // Color blanco cuando está activado y cuando está desactivado
+                    onValueChange={toggleSwitchWifi}
+                    value={wifi}
                     style={styles.switch}
                 />
+            
+                <Text style={styles.textSwitch}>Pet Friendly</Text>
+                <Switch
+                    trackColor={{ false: "#767577", true: "#004AAD" }}
+                    thumbColor={isEnabled ? "#ffffff" : "#ffffff"} // Color blanco cuando está activado y cuando está desactivado
+                    onValueChange={toggleSwitchPet}
+                    value={petfriendly}
+                    style={styles.switch}
+                />
+                <Text style={styles.textSwitch}>Cocina</Text>
+                <Switch
+                    trackColor={{ false: "#767577", true: "#004AAD" }}
+                    thumbColor={isEnabled ? "#ffffff" : "#ffffff"} // Color blanco cuando está activado y cuando está desactivado
+                    onValueChange={toggleSwitchCocina}
+                    value={cocina}
+                    style={styles.switch}
+                />
+                </View>
                 <View style={styles.form}>
                     <Text style={styles.label}>Valor de arriendo</Text>
                     <TextInput
@@ -146,23 +230,20 @@ export default function Page() {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
         padding: 1,
     },
     title: {
         fontSize: 30,
         fontWeight: 'bold',
         textAlign: 'center',
-        fontStyle: 'italic',
+        fontStyle: 'rot-b',
     },
     subtitle: {
         fontSize: 20,
-        fontWeight: 'bold',
-        textAlign: 'center',
-        fontStyle: 'italic',
+        textAlign: 'justify',
+        fontStyle: 'rot-l',
+        marginLeft: -40
     },
     form: {
         marginVertical: 20,
@@ -221,7 +302,32 @@ const styles = StyleSheet.create({
     scrollContainer: {
         alignItems: 'center',
     },
-    switch: {
-        marginVertical: 20,
-    },
+    
+    button: {
+        flexDirection: 'column', // Alinea ícono y texto en la misma fila
+        alignItems: 'center',
+        backgroundColor: '#fff',
+        padding: 10,
+        borderRadius: 15,
+        borderColor: 'black',
+        borderWidth: 1,
+        height: 80,
+        width:80,
+        marginLeft: 15
+      },
+      text: {
+        fontSize: 10,
+        color: '#000',
+        fontStyle: 'rot-l'
+      },
+      switch:{
+        flexDirection: 'row',
+        alignItems: 'center',
+        alignSelf: 'center'
+
+      },
+      textSwitch:{
+        marginLeft: 5
+      }
+   
 });
