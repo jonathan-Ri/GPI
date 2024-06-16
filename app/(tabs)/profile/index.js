@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, ActivityIndicator, FlatList } from 'react-native';
 import { Link, useRouter } from 'expo-router';
-import { firebase } from '../../../firebaseConfig';
+import { FIREBASE_AUTH, firebase } from '../../../firebaseConfig';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function Profile() {
     const router = useRouter();
     const [loading, setLoading] = useState(true);
-    const [usuarioEspecifico, setUsuarioEspecifico] = useState('diego.aliaga@alumnos.uv.cl');
+    const user = FIREBASE_AUTH.currentUser
+    const email = user.email
+    const [usuarioEspecifico, setUsuarioEspecifico] = useState(email);
     const [publicaciones, setPublicaciones] = useState([]);
 
     const todosRef = firebase.firestore().collection('Users');
-
+    console.log(user)
     useEffect(() => {
         const unsubscribe = todosRef.where('Email', '==', usuarioEspecifico).onSnapshot(querySnapshot => {
             const publicaciones = [];
