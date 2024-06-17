@@ -21,7 +21,7 @@ const Index = () => {
         const unsubscribe = todosRef.onSnapshot(querySnapshot => {
             const users = [];
             querySnapshot.forEach((doc) => {
-                const { User, Descripcion, Valor, direccion, Imagen } = doc.data();
+                const { User,titulo, Descripcion, Valor, direccion, Imagen, tiempoAlojo } = doc.data();
                 users.push({
                     id: doc.id,
                     User,
@@ -29,6 +29,8 @@ const Index = () => {
                     Valor,
                     direccion,
                     Imagen,
+                    tiempoAlojo,
+                    titulo
                 });
             });
             setLoading(false);
@@ -67,8 +69,8 @@ const Index = () => {
                                 />
                                 <View style={{ alignItems: 'justify', marginLeft: 15 }}>
                                     <Text style={{ fontSize: 15, fontFamily: 'rot-r' }}>{item.direccion}</Text>
-                                    <Text style={{ fontSize: 12, fontFamily: 'rot-l' }}>{item.Descripcion}</Text>
-                                    <Text style={{ fontSize: 15, fontFamily: 'rot-b' }}>${item.Valor} CLP <Text style={{ fontFamily: 'rot-t' }}>/por semana</Text></Text>
+                                    <Text style={{ fontSize: 12, fontFamily: 'rot-l' }}>{item.titulo}</Text>
+                                    <Text style={{ fontSize: 15, fontFamily: 'rot-b' }}>${item.Valor} CLP <Text style={{ fontFamily: 'rot-t' }}>/{item.tiempoAlojo}</Text></Text>
                                 </View>
                             </View>
                         </Pressable>

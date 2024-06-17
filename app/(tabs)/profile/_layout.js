@@ -5,6 +5,8 @@ export default function AppLayout() {
     <Stack>
               <Stack.Screen name  = "index" options={{headerShown: false}}/>
               <Stack.Screen name  = "publicar" options={{headerShown: false}}/>
+              <Stack.Screen name  = "myposts" options={{headerShown: false}}/>
+              <Stack.Screen name  = "editpost" options={{headerShown: false}}/>
 
     </Stack>
   );

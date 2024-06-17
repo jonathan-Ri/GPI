@@ -1,6 +1,6 @@
 import { View, Text, FlatList, StyleSheet, Pressable, Image, Dimensions, ActivityIndicator, RefreshControl } from 'react-native';
 import React, { useState, useEffect } from 'react';
-import { firebase } from '../../../firebaseConfig';
+import { firebase, FIREBASE_AUTH } from '../../../firebaseConfig';
 import { router } from 'expo-router';
 
 const Index = () => {
@@ -9,6 +9,9 @@ const Index = () => {
     const screenWidth = Dimensions.get('window').width;
     const [loading, setLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
+    const user = FIREBASE_AUTH.currentUser
+    const email = user.email
+    const [usuarioEspecifico, setUsuarioEspecifico] = useState(email);
 
     const onRefresh = React.useCallback(() => {
         setRefreshing(true);
@@ -18,7 +21,7 @@ const Index = () => {
     }, []);
 
     useEffect(() => {
-        const unsubscribe = todosRef.onSnapshot(querySnapshot => {
+        const unsubscribe = todosRef.where('User', '==', usuarioEspecifico).onSnapshot(querySnapshot => {
             const users = [];
             querySnapshot.forEach((doc) => {
                 const { User, Descripcion, Valor, direccion, Imagen } = doc.data();
@@ -40,6 +43,8 @@ const Index = () => {
 
     return (
         <View style={styles.container}>
+            <Text style={{alignSelf:'center', fontFamily: 'rot-m', marginTop: 10, fontSize:20}}>Tus publicaciones</Text>
+
             {loading ? (
                 <ActivityIndicator size="large" color="#004AAD" style={styles.activityIndicator} />
             ) : (
@@ -51,14 +56,14 @@ const Index = () => {
                     data={users}
                     numColumns={1}
                     renderItem={({ item }) => (
-                        <Pressable style={styles.itemContainer} onPress={() => router.push(`/chat/detalles?id=${item.id}`)}>
+                        <Pressable style={styles.itemContainer} onPress={() => router.push(`/profile/editpost?id=${item.id}`)}>
                             <View style={styles.innerContainer}>
                                 <View style={styles.innerInnerContainer}>
                                     <Image
                                         style={styles.profileImage}
                                         source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/alojavalpo.appspot.com/o/actor-brad-pitt-117003_large.jpg?alt=media&token=ae4be65c-e578-4777-86ae-0bab7ca12e3c' }}
                                     />
-                                    <Text style={styles.textName}>{item.User} - 3d</Text>
+                                    <Text style={styles.textName}>{item.User} - 3d                Edit</Text>
                                 </View>
                                 <Image
                                     resizeMode="cover"

@@ -129,14 +129,17 @@ const styles = StyleSheet.create({
         marginTop: 150,
     },
     input: {
-        marginVertical: 4,
-        marginTop:5,
-        marginBottom:10,
-        height: 50,
-        borderWidth: 0.5,
-        padding: 10,
-        backgroundColor: '#fff',
-        borderRadius:10,
+        height: 30,
+    width: 350,
+    borderBottomWidth: 0.8,
+    borderRadius: 10,
+    padding: 5,
+    borderColor: 'grey',
+    alignSelf:'center',
+    marginTop: 0,
+    fontFamily: 'rot-l',
+    marginTop: 20
+
 
     },
     button: {
@@ -149,6 +152,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#004AAD',
         marginBottom: 20,
         borderRadius:10,
+        marginTop: 20
 
       },
       button2: {

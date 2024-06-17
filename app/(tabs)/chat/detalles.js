@@ -23,8 +23,7 @@ export default function Page() {
     const [petfriendly, setPetFriendly] = useState(false);
     const [cocina, setCocina] = useState(false)
     const [tipoResidencia, setTipoResidencia] = useState('');
-    const [tiempoAlojo, setTiempoAlojo] = useState('Por día')
-    const [titulo, setTitulo] = useState('')
+    const [tiempoAlojo, setTiempoAlojo] = useState('')
 
     
     const toggleSwitchWifi = () => {
@@ -82,7 +81,7 @@ export default function Page() {
             await ref.put(blob);
             const downloadURL = await ref.getDownloadURL();
             setImagen(downloadURL);
-            await addDoc(collection(FIREBASE_DB, 'publicacion'), { User: user, Descripcion: descripcion, direccion: direccion, Valor: valor, Imagen: downloadURL, Wifi: wifi, tipoResidencia: tipoResidencia, petfriendly: petfriendly, cocina: cocina, tiempoAlojo:tiempoAlojo, titulo: titulo });
+            await addDoc(collection(FIREBASE_DB, 'publicacion'), { User: user, Descripcion: descripcion, direccion: direccion, Valor: valor, Imagen: downloadURL, Wifi: wifi, tipoResidencia: tipoResidencia, petfriendly: petfriendly, cocina: cocina, tiempoAlojo:tiempoAlojo });
 
             setUploading(false);
             Alert.alert('Publicación subida correctamente');
@@ -184,15 +183,8 @@ export default function Page() {
                     style={styles.switch}
                 />
                 </View>
-                
                 <View >
-                <Text style={styles.label}>Título</Text>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Agregue el título"
-                        onChangeText={(text) => setTitulo(text)}
-                        value={titulo}
-                    />
+                   
                     <Text style={styles.label}>Valor de arriendo:</Text>
                     <View style = {{alignItems:'center', flexDirection:'row', justifyContent:'center'
  }}>
@@ -200,7 +192,6 @@ export default function Page() {
                         placeholder="Ej: 200.000"
                         onChangeText={(text) => setValor(text)}
                         value={valor}
-                        style={{borderBottomWidth:0.5, height:40, width:170}}
                     />
                     <Picker
                         

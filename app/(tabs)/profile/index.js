@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, ActivityIndicator, FlatList } from 'react-native';
-import { Link, useRouter } from 'expo-router';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ActivityIndicator, FlatList, Pressable } from 'react-native';
+import { Link, useRouter, router } from 'expo-router';
 import { FIREBASE_AUTH, firebase } from '../../../firebaseConfig';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
@@ -48,8 +48,7 @@ export default function Profile() {
             <Text style={styles.textName}>{item.Nombre} {item.Apellido}</Text>
             <Text style={{ textAlign: 'center', fontFamily: 'rot-l' }}>Profile</Text>
 
-            <Link href={"profile/publicar"} asChild>
-                <TouchableOpacity style={styles.selectButton}>
+                <TouchableOpacity style={styles.selectButton} onPress = {() => router.push('profile/publicar')}>
                     <Text style={styles.textButton}>Publica tu arriendo</Text>
                     <Text style={styles.textButtonTwo}>en pocos pasos</Text>
                     <View>
@@ -61,47 +60,46 @@ export default function Profile() {
                         source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/alojavalpo.appspot.com/o/casaPublicacion-min(1).png?alt=media&token=9573d451-fe13-47a3-be36-3ac8a1a22acc' }}
                     />
                 </TouchableOpacity>
-            </Link>
-
-            <View style={styles.itemInnerContainer}>
+            <View><Pressable style={styles.buttonToPosts}onPress ={() => router.push('profile/myposts')}><Text style={styles.TextPost}>Mira tus publicaciones </Text>
+            <Ionicons name="chevron-forward-outline" size={13} />
+            </Pressable></View>
+            <View>
                 <Text style={styles.textTitle}>Configuraciones</Text>
 
-                <View style={styles.optionsContainer}>
-                    <Link href={"profile/informacion"} asChild>
-                        <TouchableOpacity>
-                            <Ionicons name="man-outline" size={13} />
-                            <Text style={styles.textOptions}>Informacion del perfil</Text>
+                <View>
+                        <TouchableOpacity style={styles.configButton}>
+                        <Ionicons name="man-outline" size={13} />
+                        <Text style={styles.TextPost2}>Informacion del perfil</Text>
+                        <Ionicons  style={{marginLeft:174}} name="chevron-forward-outline" size={13} />
+
                         </TouchableOpacity>
-                    </Link>
+                </View>
+
+                <View >
+                        <TouchableOpacity style={styles.configButton}>
+                        <Ionicons style={styles.icon} name="lock-open-outline" />
+                        <Text style={styles.TextPost2}>
+                          Contraseña y sesión</Text>
+                          <Ionicons style={{marginLeft:180}} name="chevron-forward-outline" size={13} />
+
+                        </TouchableOpacity>
                 </View>
 
                 <View style={styles.optionsContainer}>
-                    <Link href={"profile/informacion"} asChild>
-                        <TouchableOpacity>
-                            <Ionicons style={styles.icon} name="lock-open-outline" />
-                            <Text style={styles.textOptions}>Inicio de sesión y Contraseña</Text>
-                        </TouchableOpacity>
-                    </Link>
-                </View>
-
-                <View style={styles.optionsContainer}>
-                    <Link href={"profile/informacion"} asChild>
                         <TouchableOpacity>
                             
                             <Text style={styles.textOptions}>
                             <Ionicons name="shield-checkmark-outline" size={13} />
-                            Seguridad y Privacidad</Text>
+                              Seguridad y Privacidad</Text>
                         </TouchableOpacity>
-                    </Link>
                 </View>
 
                 <View style={styles.optionsContainer}>
-                    <Link href={"profile/informacion"} asChild>
                         <TouchableOpacity>
+                        <Text style={styles.textOptions}>
                             <Ionicons style={styles.icon} name="notifications-outline" />
-                            <Text style={styles.textOptions}>Notificaciones</Text>
+                            Notificaciones</Text>
                         </TouchableOpacity>
-                    </Link>
                 </View>
 
                 <TouchableOpacity style={styles.logOutButton} onPress={signOut}>
@@ -144,6 +142,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#004AAD',
         borderRadius: 8,
         padding: 10,
+        elevation: 20,
+
     },
     textButton: {
         color: '#ffffff',
@@ -157,6 +157,8 @@ const styles = StyleSheet.create({
         marginLeft: 20,
         marginTop: -3,
         fontSize: 14,
+        alignItems:'center',
+        flexDirection:'row'
     },
     textButtonThree: {
         color: '#ffffff',
@@ -205,4 +207,25 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+    buttonToPosts:{
+        borderBottomWidth:0.5,
+        borderTopWidth:0.5,
+        marginTop: 20,
+        height: 40,
+        alignItems:'center',
+        flexDirection:'row'
+    },
+    TextPost:{
+        fontFamily: 'rot-l',
+        marginRight:180
+    },
+    TextPost2:{
+        fontFamily: 'rot-r',
+    },
+    configButton:{
+        marginTop: 1,
+        height: 40,
+        alignItems:'center',
+        flexDirection:'row'
+    }
 });
