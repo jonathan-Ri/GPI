@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, Alert, SafeAreaView, ActivityIndicator, ScrollView, RefreshControl, Switch, Pressable } from 'react-native';
-import { addDoc, collection } from 'firebase/firestore';
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import { FIREBASE_AUTH, FIREBASE_DB, firebase } from '../../../firebaseConfig';
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
@@ -82,7 +82,8 @@ export default function Page() {
             await ref.put(blob);
             const downloadURL = await ref.getDownloadURL();
             setImagen(downloadURL);
-            await addDoc(collection(FIREBASE_DB, 'publicacion'), { User: user, Descripcion: descripcion, direccion: direccion, Valor: valor, Imagen: downloadURL, Wifi: wifi, tipoResidencia: tipoResidencia, petfriendly: petfriendly, cocina: cocina, tiempoAlojo:tiempoAlojo, titulo: titulo });
+            await addDoc(collection(FIREBASE_DB, 'publicacion'), { User: user, Descripcion: descripcion, direccion: direccion, Valor: valor, Imagen: downloadURL, Wifi: wifi, tipoResidencia: tipoResidencia, petfriendly: petfriendly, cocina: cocina, tiempoAlojo:tiempoAlojo, titulo: titulo,                 createdAt: serverTimestamp() // Añade la marca de tiempo aquí
+            });
 
             setUploading(false);
             Alert.alert('Publicación subida correctamente');
@@ -113,8 +114,8 @@ export default function Page() {
                 <ScrollView horizontal={true} style={{ marginTop: 10 }}>
                     <View style={styles.box}>
                         <Pressable
-                            style={[styles.button, tipoResidencia === 'casa' && { backgroundColor: '#004AAD' }]} // Estilo del botón con color dinámico
-                            onPress={() => changeButtonColor('casa')} // Función que se ejecuta al hacer clic
+                            style={[styles.button, tipoResidencia === 'Casa' && { backgroundColor: '#004AAD' }]} // Estilo del botón con color dinámico
+                            onPress={() => changeButtonColor('Casa')} // Función que se ejecuta al hacer clic
                         >
                             <Ionicons name="home-outline" size={40} color="black" style={styles.icon} />
                             <Text style={styles.text}>Casa</Text>
@@ -122,8 +123,8 @@ export default function Page() {
                     </View>
                     <View style={styles.box}>
                         <Pressable
-                            style={[styles.button, tipoResidencia === 'edificio' && { backgroundColor: '#004AAD' }]}
-                            onPress={() => changeButtonColor('edificio')}
+                            style={[styles.button, tipoResidencia === 'Departamento' && { backgroundColor: '#004AAD' }]}
+                            onPress={() => changeButtonColor('Departamento')}
                         >
                             <Ionicons name="business-outline" size={40} color="black" style={styles.icon} />
                             <Text style={styles.text}>Edificio</Text>
@@ -131,8 +132,8 @@ export default function Page() {
                     </View>
                     <View style={styles.box}>
                         <Pressable
-                            style={[styles.button, tipoResidencia === 'habitacion' && { backgroundColor: '#004AAD' }]}
-                            onPress={() => changeButtonColor('habitacion')}
+                            style={[styles.button, tipoResidencia === 'Habitacion' && { backgroundColor: '#004AAD' }]}
+                            onPress={() => changeButtonColor('Habitacion')}
                         >
                             <Ionicons name="bed-outline" size={40} color="black" style={styles.icon} />
                             <Text style={styles.text}>Habitación</Text>
@@ -140,8 +141,8 @@ export default function Page() {
                     </View>
                     <View style={styles.box}>
                         <Pressable
-                            style={[styles.button, tipoResidencia === 'houseboat' && { backgroundColor: '#004AAD' }]}
-                            onPress={() => changeButtonColor('houseboat')}
+                            style={[styles.button, tipoResidencia === 'Houseboat' && { backgroundColor: '#004AAD' }]}
+                            onPress={() => changeButtonColor('Houseboat')}
                         >
                             <Ionicons name="boat-outline" size={40} color="black" style={styles.icon} />
                             <Text style={styles.text}>Houseboat</Text>
