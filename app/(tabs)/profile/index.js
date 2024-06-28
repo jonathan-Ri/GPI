@@ -85,20 +85,23 @@ export default function Profile() {
                         </TouchableOpacity>
                 </View>
 
-                <View style={styles.optionsContainer}>
-                        <TouchableOpacity>
+                <View >
+                <TouchableOpacity style={styles.configButton}>
                             
-                            <Text style={styles.textOptions}>
                             <Ionicons name="shield-checkmark-outline" size={13} />
-                              Seguridad y Privacidad</Text>
+                            <Text style={styles.TextPost2}> Seguridad y Privacidad</Text>
+                            <Ionicons style={{marginLeft:158}} name="chevron-forward-outline" size={13} />
+
                         </TouchableOpacity>
                 </View>
 
-                <View style={styles.optionsContainer}>
-                        <TouchableOpacity>
-                        <Text style={styles.textOptions}>
+                <View >
+                <TouchableOpacity style={styles.configButton}>
                             <Ionicons style={styles.icon} name="notifications-outline" />
+                            <Text style={styles.TextPost2}>
                             Notificaciones</Text>
+                            <Ionicons style={{marginLeft:215}} name="chevron-forward-outline" size={13} />
+
                         </TouchableOpacity>
                 </View>
 
@@ -213,11 +216,12 @@ const styles = StyleSheet.create({
         marginTop: 20,
         height: 40,
         alignItems:'center',
-        flexDirection:'row'
+        flexDirection:'row',
+        marginBottom: 15
     },
     TextPost:{
-        fontFamily: 'rot-l',
-        marginRight:180
+        fontFamily: 'rot-b',
+        marginRight:180,
     },
     TextPost2:{
         fontFamily: 'rot-r',

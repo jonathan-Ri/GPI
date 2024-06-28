@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1055324407496",
+    "project_id": "alojavalpo-b989a",
+    "storage_bucket": "alojavalpo-b989a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1055324407496:android:c2ce855c42080fd5d207fd",
+        "android_client_info": {
+          "package_name": "com.diego00aliaga.alojandoMil"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1055324407496-934d97nahn0h6eanb5iog0t3hn7nocip.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.diego00aliaga.alojandoMil",
+            "certificate_hash": "663f16b98b58e5fa01bc94e6ef0f31217b4b7075"
+          }
+        },
+        {
+          "client_id": "1055324407496-ukcqfilt1a755bqos0f1q262defe5qva.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.diego00aliaga.alojandoMil",
+            "certificate_hash": "8521aa091414f434e30e1d76a87bc31812dd85f8"
+          }
+        },
+        {
+          "client_id": "1055324407496-nllq9mp4c9q2te5gnls0dsv7gvc8jsf7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbyKLIzhMnyNRpV1Pa9VKn4OIAor5M5PY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1055324407496-nllq9mp4c9q2te5gnls0dsv7gvc8jsf7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

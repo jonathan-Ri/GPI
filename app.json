@@ -16,13 +16,17 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.diego00aliaga.alojandoMil"
     },
     "android": {
+      "googleServicesFile": "./google-services.json",
+
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.diego00aliaga.alojandoMil"
     },
     "web": {
       "bundler": "metro",
@@ -31,14 +35,25 @@
     },
     "plugins": [
       "expo-router",
-      ["expo-font",
-      {
-      "fonts": ["./assets/fonts/Inter-Black.otf"]
-      }
-    ]
+      "@react-native-google-signin/google-signin",
+
+      [
+        "expo-font"
+       
+      ]
+      
+     
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "a5cf2653-f21d-438b-a9be-b2c4bf1ed4ab"
+      }
     }
   }
 }

@@ -7,15 +7,49 @@ import { NavigationContainer } from '@react-navigation/native';
 import Search from '../../(tabs)/search';
 import Profile from '../../(tabs)/profile';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { GoogleSignin, GoogleSigninButton } from '@react-native-google-signin/google-signin';
+import auth from '@react-native-firebase/auth';
+import 'expo-dev-client'
 
 const LoginScreen = () => {
     const [email, setEmail] = useState('diego.aliaga@alumnos.uv.cl');
     const [password, setPassword] = useState('123456');
     const [loading, setLoading] = useState(false);
     const navigation = useNavigation();
+    const [initializing, setInializing] = useState(true);
+    const [user, setUser] = useState();
+   
+    GoogleSignin.configure({
+        scopes: ['https://www.googleapis.com/auth/drive.appdata'], // what API you want to access on behalf of the user, default is email and profile
+        webClientId: '1055324407496-nllq9mp4c9q2te5gnls0dsv7gvc8jsf7.apps.googleusercontent.com',
+      });
+      
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, user => {
+            if (user) {
+                // User is signed in, redirect to Search screen
+                router.replace('../../(tabs)/search');
+            }
+        });
 
-    
+        // Cleanup subscription on unmount
+        return () => unsubscribe();
+    }, []);
+   
+    const onGoogleButtonPress = async() => {
+        const {idToken} = await GoogleSignin.signIn();
 
+        const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+
+        const user_sign_in = auth().signInWithCredential(googleCredential);
+
+        user_sign_in.then((user) => {
+            console.log(user);
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+    }
     const SignIn = async () => {
         try {
             const response = await signInWithEmailAndPassword(FIREBASE_AUTH, email, password);
@@ -71,7 +105,13 @@ const LoginScreen = () => {
                 <Link href={"login/registrarse"}>
                 <Text style={styles.text2}>Registrarse</Text>
                 </Link>
+                <View>
+                    <GoogleSigninButton
+                    onPress={onGoogleButtonPress}
+                    />
                 </View>
+                </View>
+
             </KeyboardAvoidingView>
 
            

@@ -61,16 +61,9 @@ export default function _layout() {
         }}
       />
       <Stack.Screen name="index" options={{ headerShown: false }} />
-      <Stack.Screen
-        name="(modals)/login/index"
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name='(modals)/login/registrarse'
-        options={{ headerShown: false }}
-      />
+      <Stack.Screen name="(modals)/login/index" options={{ headerShown: false }} />
+
+     
       
     </Stack>
   );

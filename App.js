@@ -5,6 +5,8 @@ import Page from './app/(tabs)/profile'; // Corregido: Corregido la ruta del imp
 import { useEffect, useState } from 'react';
 import { User, onAuthStateChanged } from 'firebase/auth';
 import { FIREBASE_AUTH } from "./firebaseConfig";
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import 'expo-dev-client'
 
 const Stack = createNativeStackNavigator();
 
@@ -19,14 +21,9 @@ function InsideLayout() {
 }
 
 export default function App() {
-    const [user, setUser] = useState< User | null>(null);
-    useEffect(() => {
-        onAuthStateChanged(FIREBASE_AUTH, (user) => {
-            console.log('user', user);
-            setUser(user);
-        });
-    }, []);
-
+    
+ 
+   
     return (
         <NavigationContainer>
             <Stack.Navigator initialRouteName="Page">
