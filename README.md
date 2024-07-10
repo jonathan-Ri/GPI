@@ -14,7 +14,6 @@ Requisitos:
 - [Link a la APK](https://drive.google.com/file/d/1-m4mfFROUg6NHb5gUGJ1uIhvpzP-Bj2s/view?usp=share_link)
 
 ¡Eso es todo! 
- 
 
 
 
