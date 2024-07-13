@@ -11,7 +11,7 @@ Requisitos:
 - 77MB de espacio. 
 
 ## Nuestra Demo
-- [Link a la APK](https://drive.google.com/file/d/1-m4mfFROUg6NHb5gUGJ1uIhvpzP-Bj2s/view?usp=share_link)
+- [Link a la APK](https://drive.google.com/file/d/1uu982jOckBe8rdijzMbB-6TMNpiFLWbg/view?usp=sharing)
 
 ¡Eso es todo! 
 
